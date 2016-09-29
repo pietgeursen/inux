@@ -56,7 +56,7 @@ module.exports = Domain({
         window.history.pushState({}, null, href)
         return pull(
           pull.values([set(href)]),
-          pull.asyncMap((action) => process.nextTick(()=> cb(action)))
+          pull.asyncMap((action, cb) => process.nextTick(()=> cb(null, action)))
         )
       }
     }
