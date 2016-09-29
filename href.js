@@ -54,7 +54,10 @@ module.exports = Domain({
       href = href.replace(/#.*/, '')
       if (window.location.href !== href) {
         window.history.pushState({}, null, href)
-        return pull.values([set(href)])
+        return pull(
+          pull.values([set(href)]),
+          pull.asyncMap((action) => process.nextTick(()=> cb(action)))
+        )
       }
     }
   }
